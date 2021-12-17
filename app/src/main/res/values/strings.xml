@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TP</string>
+    <string name="TVlaunch">TP réalisé par HELINCKX Corentin</string>
+    <string name="btnPopular">Popular</string>
+    <string name="btnUpcoming">Upcoming</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="test_popular">test popular</string>
+    <string name="test_upcoming">test upcoming</string>
+    <string name="langue_fr">Langue:FR</string>
+    <string name="langue_en">Langue:EN</string>
+</resources>
