@@ -4,25 +4,25 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:layout_width="200dp"
-        android:layout_height="250dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="10dp">
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/Poster1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></ImageView>
+            <ImageView
+                android:id="@+id/Poster1"
+                android:layout_width="200dp"
+                android:layout_height="220dp">
+                <!--android:clickable="true" -->
+                <!--android:onClick="actDetails" -->
 
-        <TextView
-            android:id="@+id/Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextView>
+            </ImageView>
 
-    </LinearLayout>
+        </LinearLayout>
+
+
 
 
 

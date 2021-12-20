@@ -6,12 +6,20 @@ public class Movies {
     public String id;
     public String title;
     public String release_date;
+    public String overview;
 
-    public Movies(String path, String id, String title, String release_date){
+    public Movies(String path,String title, String id){
+        this.poster_path=this.getPoster_path()+path;
+        this.title=title;
+        this.id=id;
+    }
+
+    public Movies(String path, String id, String title, String release_date, String overview){
         this.poster_path=this.getPoster_path()+path;
         this.id=id;
         this.title=title;
         this.release_date=release_date;
+        this.overview=overview;
     }
 
     //getter
@@ -29,5 +37,9 @@ public class Movies {
 
     public String getRelease_date() {
         return release_date;
+    }
+
+    public String getOverview() {
+        return overview;
     }
 }

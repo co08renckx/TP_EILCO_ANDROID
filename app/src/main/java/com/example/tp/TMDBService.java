@@ -15,4 +15,7 @@ public interface TMDBService {
 
     @GET("/3/movie/upcoming")
     Call<Results> upcomingRequest(@Query("api_key") String api_key,@Query("language") String language);
+
+    @GET("/3/movie/{movie_id}")
+    Call<Movies> getDetails(@Path("movie_id") String movie_id,@Query("api_key") String api_key,@Query("language") String language);
 }

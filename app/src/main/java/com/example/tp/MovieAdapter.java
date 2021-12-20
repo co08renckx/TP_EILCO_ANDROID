@@ -16,15 +16,22 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
+        private final ListItemClickListener mOnClickListener;
+
         private final List<Movies> mMovies;
 
-        public MovieAdapter(List<Movies> Movies) {
+        interface ListItemClickListener{
+            void onListItemClick(int position, List<Movies> movies);
+        }
+
+        public MovieAdapter(List<Movies> Movies,ListItemClickListener onClickListener) {
             mMovies = Movies;
+            mOnClickListener=onClickListener;
         }
 
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder (@NonNull ViewGroup parent,int viewType){
+        public ViewHolder onCreateViewHolder  (@NonNull ViewGroup parent,int viewType){
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -39,9 +46,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
             ImageView poster1 = holder.poster1;
             Glide.with(poster1).load(movie.getPoster_path()).placeholder(R.drawable.ic_launcher_background).into(poster1);
-
-            TextView title = holder.title;
-            title.setText(movie.getOriginal_title());
         }
 
 
@@ -50,17 +54,25 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             return mMovies.size();
         }
 
-        public static class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             public ImageView poster1;
-            public TextView title;
 
-            public ViewHolder(View itemView) {
+            public ViewHolder  (View itemView) {
                 super(itemView);
-
                 poster1 = (ImageView) itemView.findViewById(R.id.Poster1);
-                title = (TextView) itemView.findViewById(R.id.Title);
+                itemView.setOnClickListener(this);
+
+            }
+            @Override
+            public void onClick(View v) {
+                int position = getAdapterPosition();
+                mOnClickListener.onListItemClick(position,mMovies);
+
             }
         }
 
+    public List<Movies> getmMovies() {
+        return mMovies;
     }
+}
 
