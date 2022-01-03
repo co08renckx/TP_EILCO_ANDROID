@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -26,21 +25,22 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PopularFragment extends Fragment implements MovieAdapter.ListItemClickListener{
+public class fragment_listRecherche extends Fragment implements MovieAdapter.ListItemClickListener {
     private String api_key = "603c388b932d1dca7a56879a352baef7";
+    String nom;
+    String language;
+    View view;
     static List<Movies> moviesList = new ArrayList<>();
-    private String language;
     private String id_film;
     static int position;
 
-
-
-    public PopularFragment() {
+    public fragment_listRecherche() {
         // Required empty public constructor
     }
-
-    public PopularFragment(String lang){
+    public fragment_listRecherche(View v,String lang, String nom) {
+        view=v;
         language=lang;
+        this.nom=nom;
     }
 
     @Override
@@ -48,19 +48,19 @@ public class PopularFragment extends Fragment implements MovieAdapter.ListItemCl
         super.onCreate(savedInstanceState);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        View view=inflater.inflate(R.layout.fragment_popular, container, false);
-
+        //Toast.makeText(fragment_listRecherche.this.getContext(),nom,Toast.LENGTH_SHORT).show();
+        View view = inflater.inflate(R.layout.fragment_list_recherche, container, false);
         //on récupére le recyclerView
-        RecyclerView rvPopular = (RecyclerView) view.findViewById(R.id.rvPopular);
+        RecyclerView rvRecherche = (RecyclerView) view.findViewById(R.id.rvlistRecherche);
 
         //type de LayoutManager
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(),2,LinearLayoutManager.VERTICAL,false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(),2, LinearLayoutManager.VERTICAL,false);
+
+        //je vide la movieList
+        moviesList.clear();
 
         //creation du service github
         TMDBService service = new Retrofit.Builder()
@@ -68,10 +68,8 @@ public class PopularFragment extends Fragment implements MovieAdapter.ListItemCl
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(TMDBService.class);
-
         //appel vers le nom du repo
-        service.popularRequest(api_key,language).enqueue(new Callback<Results>() {
-
+        service.searchRequest(api_key,language,nom).enqueue(new Callback<Results>() {
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
                 for (Movies movie : response.body().getResults()) {
@@ -79,12 +77,12 @@ public class PopularFragment extends Fragment implements MovieAdapter.ListItemCl
                 }
 
                 //adapteur et initialisation
-                MovieAdapter adapter = new MovieAdapter(moviesList,PopularFragment.this);
+                MovieAdapter adapter = new MovieAdapter(moviesList,fragment_listRecherche.this);
 
                 //on indique l'adapter au recycler
-                rvPopular.setAdapter(adapter);
+                rvRecherche.setAdapter(adapter);
 
-                rvPopular.setLayoutManager(gridLayoutManager);
+                rvRecherche.setLayoutManager(gridLayoutManager);
             }
 
             @Override
@@ -93,16 +91,14 @@ public class PopularFragment extends Fragment implements MovieAdapter.ListItemCl
 
         });
 
-
         return view;
-
-
     }
+
 
     @Override
     public void onListItemClick(int position) {
         Movies film=moviesList.get(position);
-        FragmentManager fm = PopularFragment.this.getParentFragmentManager();
+        FragmentManager fm = fragment_listRecherche.this.getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragment,new DetailsFragment(film.getId(),language));
         fragmentTransaction.commit();
@@ -125,6 +121,8 @@ public class PopularFragment extends Fragment implements MovieAdapter.ListItemCl
         Button btn3 = (Button) getActivity().findViewById(R.id.btnSearch);
         btn3.setBackgroundColor(Color.rgb(55,0,179));
         btn3.setTextColor(Color.rgb(255,255,255));
+
+
     }
 
     public String getId_film() {
@@ -150,5 +148,6 @@ public class PopularFragment extends Fragment implements MovieAdapter.ListItemCl
     public static void setMoviesList(List<Movies> moviesList) {
         PopularFragment.moviesList = moviesList;
     }
+
 
 }

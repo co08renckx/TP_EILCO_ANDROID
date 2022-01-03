@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -53,7 +54,6 @@ public class DetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_details, container, false);
 
-        //test
         //creation du service github
         TMDBService service = new Retrofit.Builder()
                 .baseUrl(TMDBService.ENDPOINT)
@@ -83,6 +83,9 @@ public class DetailsFragment extends Fragment {
                 TextView Date=view.findViewById(R.id.ReleaseDate);
                 Date.setText(film.getRelease_date());
 
+                Button btn = (Button) getActivity().findViewById(R.id.btnFR);
+                Button btn2 = (Button) getActivity().findViewById(R.id.btnEn);
+
             }
 
             @Override
@@ -93,4 +96,5 @@ public class DetailsFragment extends Fragment {
         return view;
 
     }
+
 }

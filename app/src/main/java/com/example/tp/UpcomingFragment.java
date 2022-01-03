@@ -1,5 +1,6 @@
 package com.example.tp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,8 +27,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UpcomingFragment extends Fragment implements MovieAdapter.ListItemClickListener{
     private String api_key = "603c388b932d1dca7a56879a352baef7";
-    private List<Movies> moviesList = new ArrayList<>();
-    String language;
+    static List<Movies> moviesList = new ArrayList<>();
+    private String language;
+    private String id_film;
+    static int position;
 
     public UpcomingFragment() {
         // Required empty public constructor
@@ -83,16 +87,54 @@ public class UpcomingFragment extends Fragment implements MovieAdapter.ListItemC
     }
 
     @Override
-    public void onListItemClick(int position, List<Movies> movies) {
-
-        moviesList=movies;
+    public void onListItemClick(int position) {
         Movies film=moviesList.get(position);
-        Toast.makeText(UpcomingFragment.this.getContext(),film.getId(), Toast.LENGTH_SHORT).show();
-
         FragmentManager fm = UpcomingFragment.this.getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragment,new DetailsFragment(film.getId(),language));
         fragmentTransaction.commit();
+        chgtCouleurBtn();
+        setId_film(film.getId());
+        HomeActivity.setInd_frag(0);
+        setPosition(position);
+    }
+
+    public void chgtCouleurBtn(){
+        Button btn = (Button) getActivity().findViewById(R.id.btnPopular);
+        btn.setBackgroundColor(Color.rgb(55,0,179));
+        btn.setTextColor(Color.rgb(255,255,255));
+
+        Button btn2 = (Button) getActivity().findViewById(R.id.btnUpcoming);
+        btn2.setBackgroundColor(Color.rgb(55,0,179));
+        btn2.setTextColor(Color.rgb(255,255,255));
+
+        Button btn3 = (Button) getActivity().findViewById(R.id.btnSearch);
+        btn3.setBackgroundColor(Color.rgb(55,0,179));
+        btn3.setTextColor(Color.rgb(255,255,255));
+    }
+
+    public String getId_film() {
+        return id_film;
+    }
+
+    public void setId_film(String id_film) {
+        this.id_film = id_film;
+    }
+
+    public void setPosition(int position){
+        this.position=position;
+    }
+
+    public static int getPosition(){
+        return position;
+    }
+
+    public static List<Movies> getMoviesList() {
+        return moviesList;
+    }
+
+    public static void setMoviesList(List<Movies> moviesList) {
+        PopularFragment.moviesList = moviesList;
     }
 
 }

@@ -69,7 +69,14 @@
                 android:layout_height="match_parent"
                 android:onClick="actUpcoming"
                 android:text="@string/btnUpcoming">
-
+            </Button>
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Search"
+                android:onClick="actSearch">
             </Button>
 
         </LinearLayout>

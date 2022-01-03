@@ -21,7 +21,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         private final List<Movies> mMovies;
 
         interface ListItemClickListener{
-            void onListItemClick(int position, List<Movies> movies);
+            void onListItemClick(int position);
         }
 
         public MovieAdapter(List<Movies> Movies,ListItemClickListener onClickListener) {
@@ -66,7 +66,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 int position = getAdapterPosition();
-                mOnClickListener.onListItemClick(position,mMovies);
+                mOnClickListener.onListItemClick(position);
 
             }
         }
